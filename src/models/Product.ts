@@ -9,7 +9,7 @@ export interface IProduct {
     condition: string;
     sellerName: string;
     sellerEmail: string;
-    listingType: "sale" | "auction" | "exchange";
+    listingType: "sale" | "free" | "exchange";
     status: "available" | "sold" | "reserved";
     createdAt: Date;
     updatedAt: Date;
@@ -57,7 +57,7 @@ const productSchema = new Schema<IProduct>({
     },
     listingType: {
         type: String,
-        enum: ["sale", "auction", "exchange"],
+        enum: ["sale", "free", "exchange"],
         default: "sale",
     },
     status: {
