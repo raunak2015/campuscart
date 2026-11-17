@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 
 export const metadata: Metadata = {
     title: "CampusCart",
@@ -15,7 +16,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                {children}
+                <FavoritesProvider>
+                    {children}
+                </FavoritesProvider>
             </body>
         </html>
     );

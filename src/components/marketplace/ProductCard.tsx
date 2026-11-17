@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Product } from "@/types/product";
+import FavoriteButton from "./FavoriteButton";
 
 interface ProductCardProps {
     product: Product;
@@ -18,15 +19,18 @@ export default function ProductCard({ product }: ProductCardProps) {
                 />
 
                 {/* Listing Type Badge */}
-                <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold capitalize ${
-                    product.listingType === "free"
+                <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold capitalize ${product.listingType === "free"
                         ? "bg-green-100 text-green-700"
                         : product.listingType === "exchange"
-                        ? "bg-orange-100 text-orange-700"
-                        : "bg-purple-100 text-purple-700"
-                }`}>
+                            ? "bg-orange-100 text-orange-700"
+                            : "bg-purple-100 text-purple-700"
+                    }`}>
                     {product.listingType}
                 </span>
+                {/* Favorite Button */}
+                <div className="absolute right-3 top-3">
+                    <FavoriteButton product={product} />
+                </div>
             </div>
 
             {/* Product Details */}
