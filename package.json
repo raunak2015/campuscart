@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:enquiries": "tsx src/scripts/seedEnquiries.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -28,6 +29,7 @@
     "eslint-config-next": "16.4.6",
     "postcss": "^8.5.33",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
