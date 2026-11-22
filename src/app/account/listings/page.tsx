@@ -11,6 +11,7 @@ import {
     Pencil,
     Trash2,
     ExternalLink,
+    ArrowLeft,
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
@@ -49,10 +50,10 @@ export default function MyListingsPage() {
                 }
 
                 setProducts(data.products);
-            } catch (error) {
+            } catch (err) {
                 setError(
-                    error instanceof Error
-                        ? error.message
+                    err instanceof Error
+                        ? err.message
                         : "Something went wrong"
                 );
             } finally {
@@ -111,11 +112,11 @@ export default function MyListingsPage() {
                 prev.filter((product) => product._id !== id)
             );
 
-        } catch (error) {
+        } catch (err) {
             alert(
-                error instanceof Error
-                    ? error.message
-                    : "Failed to delete product"
+                err instanceof Error
+                    ? err.message
+                    : "Something went wrong"
             );
         } finally {
             setDeletingId(null);
@@ -123,12 +124,6 @@ export default function MyListingsPage() {
     };
 
     const handleMarkSold = async (id: string) => {
-        const confirmed = window.confirm(
-            "Are you sure you want to mark this product as sold?"
-        );
-
-        if (!confirmed) return;
-
         try {
             setUpdatingId(id);
 
@@ -146,7 +141,7 @@ export default function MyListingsPage() {
 
             if (!response.ok) {
                 throw new Error(
-                    data.message || "Failed to update product status"
+                    data.message || "Failed to update product"
                 );
             }
 
@@ -158,10 +153,10 @@ export default function MyListingsPage() {
                 )
             );
 
-        } catch (error) {
+        } catch (err) {
             alert(
-                error instanceof Error
-                    ? error.message
+                err instanceof Error
+                    ? err.message
                     : "Something went wrong"
             );
         } finally {
@@ -171,8 +166,8 @@ export default function MyListingsPage() {
 
     if (authLoading || loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-gray-500">
+            <div className="flex min-h-screen items-center justify-center bg-white">
+                <p className="text-sm font-medium text-[#524B63]">
                     Loading your listings...
                 </p>
             </div>
@@ -182,69 +177,69 @@ export default function MyListingsPage() {
     if (!user) return null;
 
     return (
-        <main className="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
+        <main className="min-h-screen bg-white px-6 py-10">
 
             <div className="mx-auto max-w-7xl">
 
-                {/* Page Header */}
-                <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
-                    <div>
-                        <p className="font-medium text-violet-700">
-                            Account / My Listings
-                        </p>
+                {/* Back button */}
+                <Link
+                    href="/account"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#524B63] hover:text-[#0D0C22] mb-4"
+                >
+                    <ArrowLeft size={14} /> Back to Dashboard
+                </Link>
 
-                        <h1 className="mt-2 text-3xl font-bold text-gray-900">
+                {/* Page Header */}
+                <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                    <div>
+                        <h1 className="text-3xl font-extrabold tracking-tight text-[#0D0C22]">
                             My Listings
                         </h1>
 
-                        <p className="mt-2 text-gray-500">
-                            Manage all the products you have listed.
+                        <p className="mt-1 text-sm text-[#3D3D4E]">
+                            Manage all products you have listed for sale or exchange.
                         </p>
                     </div>
 
                     <Link
                         href="/sell"
-                        className="flex items-center justify-center gap-2 rounded-xl bg-violet-700 px-5 py-3 font-semibold text-white transition hover:bg-violet-800"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0D0C22] px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#3A3546]"
                     >
-                        <Plus size={19} />
+                        <Plus size={16} />
                         Add New Product
                     </Link>
                 </div>
 
                 {/* Error */}
                 {error && (
-                    <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-red-600">
+                    <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-600">
                         {error}
                     </div>
                 )}
 
-                {/* Statistics */}
-                <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {/* Statistics Cards */}
+                <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
 
                     {[
                         {
                             title: "Total Listings",
                             value: totalListings,
                             icon: Package,
-                            color: "bg-violet-100 text-violet-700",
                         },
                         {
                             title: "Available",
                             value: availableListings,
                             icon: CheckCircle2,
-                            color: "bg-green-100 text-green-700",
                         },
                         {
                             title: "Sold",
                             value: soldListings,
                             icon: CheckCircle2,
-                            color: "bg-blue-100 text-blue-700",
                         },
                         {
                             title: "Reserved",
                             value: reservedListings,
                             icon: Clock,
-                            color: "bg-orange-100 text-orange-700",
                         },
                     ].map((stat) => {
                         const Icon = stat.icon;
@@ -252,21 +247,21 @@ export default function MyListingsPage() {
                         return (
                             <div
                                 key={stat.title}
-                                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
+                                className="rounded-xl border border-[#E7E7E9] bg-[#F8F7F4] p-4"
                             >
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-gray-500">
+                                        <p className="text-xs font-semibold text-[#524B63]">
                                             {stat.title}
                                         </p>
 
-                                        <h2 className="mt-2 text-3xl font-bold text-gray-900">
+                                        <h2 className="mt-1 text-xl font-bold text-[#0D0C22]">
                                             {stat.value}
                                         </h2>
                                     </div>
 
-                                    <div className={`rounded-xl p-3 ${stat.color}`}>
-                                        <Icon size={24} />
+                                    <div className="rounded-full border border-[#E7E7E9] bg-white p-2 text-[#0D0C22]">
+                                        <Icon size={16} />
                                     </div>
                                 </div>
                             </div>
@@ -275,8 +270,8 @@ export default function MyListingsPage() {
 
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="mt-10 flex flex-wrap items-center gap-3">
+                {/* Filter Tabs - Dribbble Pill Buttons */}
+                <div className="mt-8 flex flex-wrap items-center gap-2">
                     {[
                         { label: "All", value: "all" },
                         { label: "Available", value: "available" },
@@ -288,10 +283,11 @@ export default function MyListingsPage() {
                             onClick={() =>
                                 setActiveFilter(filter.value as FilterType)
                             }
-                            className={`rounded-lg px-5 py-2.5 text-sm font-semibold transition ${activeFilter === filter.value
-                                ? "bg-violet-700 text-white"
-                                : "border border-gray-200 bg-white text-gray-600 hover:border-violet-300"
-                                }`}
+                            className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
+                                activeFilter === filter.value
+                                    ? "bg-[#0D0C22] text-white"
+                                    : "border border-[#E7E7E9] bg-[#F8F7F4] text-[#3D3D4E] hover:border-[#0D0C22]"
+                            }`}
                         >
                             {filter.label}
                         </button>
@@ -300,17 +296,17 @@ export default function MyListingsPage() {
 
                 {/* Products Grid */}
                 {filteredProducts.length === 0 ? (
-                    <div className="mt-8 rounded-2xl border border-gray-100 bg-white px-6 py-16 text-center shadow-sm">
+                    <div className="mt-6 rounded-xl border border-[#E7E7E9] bg-[#F8F7F4] px-6 py-14 text-center">
                         <Package
-                            size={45}
-                            className="mx-auto text-gray-300"
+                            size={40}
+                            className="mx-auto text-[#524B63]"
                         />
 
-                        <h2 className="mt-4 text-xl font-bold text-gray-900">
+                        <h2 className="mt-3 text-base font-bold text-[#0D0C22]">
                             No listings found
                         </h2>
 
-                        <p className="mt-2 text-gray-500">
+                        <p className="mt-1 text-xs text-[#524B63]">
                             {activeFilter === "all"
                                 ? "You haven't listed any products yet."
                                 : `You don't have any ${activeFilter} listings.`}
@@ -318,23 +314,23 @@ export default function MyListingsPage() {
 
                         <Link
                             href="/sell"
-                            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-violet-700 px-5 py-3 font-semibold text-white hover:bg-violet-800"
+                            className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-[#0D0C22] px-5 py-2 text-xs font-semibold text-white hover:bg-[#3A3546]"
                         >
-                            <Plus size={18} />
+                            <Plus size={15} />
                             Create Your First Listing
                         </Link>
                     </div>
                 ) : (
-                    <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
                         {filteredProducts.map((product) => (
                             <div
                                 key={product._id}
-                                className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                                className="overflow-hidden rounded-xl border border-[#E7E7E9] bg-white transition hover:border-[#0D0C22]"
                             >
 
                                 {/* Product Image */}
-                                <div className="relative h-52 bg-gray-100">
+                                <div className="relative h-48 bg-[#F8F7F4]">
                                     {product.images?.[0] ? (
                                         <Image
                                             src={product.images[0]}
@@ -344,69 +340,71 @@ export default function MyListingsPage() {
                                             className="object-cover"
                                         />
                                     ) : (
-                                        <div className="flex h-full items-center justify-center text-gray-400">
+                                        <div className="flex h-full items-center justify-center text-xs text-[#524B63]">
                                             No Image
                                         </div>
                                     )}
 
-                                    <span className={`absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold ${product.status === "available"
-                                        ? "bg-green-100 text-green-700"
-                                        : product.status === "sold"
-                                            ? "bg-blue-100 text-blue-700"
-                                            : "bg-orange-100 text-orange-700"
-                                        }`}>
+                                    <span className={`absolute right-3 top-3 rounded-full border border-[#E7E7E9] bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${
+                                        product.status === "available"
+                                            ? "text-[#0D0C22]"
+                                            : product.status === "sold"
+                                            ? "text-[#524B63]"
+                                            : "text-amber-700"
+                                    }`}>
                                         {product.status}
                                     </span>
                                 </div>
 
                                 {/* Product Details */}
-                                <div className="p-5">
+                                <div className="p-4">
 
-                                    <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">
+                                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#524B63]">
                                         {product.category}
                                     </p>
 
-                                    <h3 className="mt-2 truncate text-lg font-bold text-gray-900">
+                                    <h3 className="mt-1 truncate text-base font-bold text-[#0D0C22]">
                                         {product.title}
                                     </h3>
 
-                                    <p className="mt-1 text-sm text-gray-500">
+                                    <p className="mt-0.5 text-xs text-[#524B63]">
                                         {product.condition}
                                     </p>
 
-                                    <p className="mt-3 text-xl font-bold text-gray-900">
+                                    <p className="mt-2.5 text-lg font-bold text-[#0D0C22]">
                                         {product.listingType === "free"
                                             ? "FREE"
                                             : `₹${product.price}`}
                                     </p>
 
                                     {/* Actions */}
-                                    <div className="mt-5 flex items-center gap-2 border-t border-gray-100 pt-4">
+                                    <div className="mt-4 flex items-center gap-2 border-t border-[#E7E7E9] pt-3">
 
                                         <Link
                                             href={`/product/${product._id}`}
-                                            className="flex flex-1 items-center justify-center gap-1 rounded-lg border border-gray-200 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+                                            className="flex flex-1 items-center justify-center gap-1 rounded-full border border-[#E7E7E9] py-1.5 text-xs font-semibold text-[#0D0C22] hover:bg-[#F8F7F4]"
                                         >
-                                            <ExternalLink size={15} />
+                                            <ExternalLink size={13} />
                                             View
                                         </Link>
 
                                         <button
                                             disabled
                                             title="Edit feature coming next"
-                                            className="flex flex-1 items-center justify-center gap-1 rounded-lg bg-violet-50 py-2 text-sm font-medium text-violet-700 opacity-60"
+                                            className="flex flex-1 items-center justify-center gap-1 rounded-full border border-[#E7E7E9] bg-[#F8F7F4] py-1.5 text-xs font-semibold text-[#524B63] opacity-60"
                                         >
-                                            <Pencil size={15} />
+                                            <Pencil size={13} />
                                             Edit
                                         </button>
+
                                         {product.status === "available" && (
                                             <button
                                                 onClick={() => handleMarkSold(product._id)}
                                                 disabled={updatingId === product._id}
-                                                className="flex flex-1 items-center justify-center gap-1 rounded-lg bg-green-50 py-2 text-sm font-medium text-green-700 transition hover:bg-green-100 disabled:opacity-50"
+                                                className="flex flex-1 items-center justify-center gap-1 rounded-full border border-green-200 bg-green-50 py-1.5 text-xs font-semibold text-green-700 transition hover:bg-green-100 disabled:opacity-50"
                                             >
-                                                <CheckCircle2 size={15} />
-                                                {updatingId === product._id ? "Updating..." : "Sold"}
+                                                <CheckCircle2 size={13} />
+                                                {updatingId === product._id ? "..." : "Sold"}
                                             </button>
                                         )}
 
@@ -415,10 +413,10 @@ export default function MyListingsPage() {
                                                 handleDelete(product._id)
                                             }
                                             disabled={deletingId === product._id}
-                                            className="flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100 disabled:opacity-50"
+                                            className="flex items-center justify-center rounded-full border border-red-200 bg-red-50 p-2 text-red-600 transition hover:bg-red-100 disabled:opacity-50"
                                             title="Delete listing"
                                         >
-                                            <Trash2 size={17} />
+                                            <Trash2 size={15} />
                                         </button>
 
                                     </div>

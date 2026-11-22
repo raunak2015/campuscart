@@ -2,6 +2,8 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import type { Product } from "@/types/product";
 import ProductImage from "@/components/marketplace/ProductImage";
 import ProductInfo from "@/components/marketplace/ProductInfo";
@@ -39,19 +41,39 @@ function ProductDetailsContent() {
     }, [id]);
 
     if (loading) {
-        return <p className="text-center py-20">Loading product...</p>;
+        return (
+            <div className="py-24 text-center text-sm text-[#524B63]">
+                Loading product...
+            </div>
+        );
     }
 
     if (error || !product) {
         return (
-            <p className="text-center text-red-500 py-20">
-                {error || "Product not found"}
-            </p>
+            <div className="py-24 text-center">
+                <p className="text-sm font-semibold text-red-600">
+                    {error || "Product not found"}
+                </p>
+                <Link
+                    href="/marketplace"
+                    className="mt-4 inline-block rounded-full bg-[#0D0C22] px-5 py-2 text-xs font-semibold text-white"
+                >
+                    Back to Marketplace
+                </Link>
+            </div>
         );
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="mx-auto max-w-6xl px-6 py-10">
+            {/* Back link */}
+            <Link
+                href="/marketplace"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#524B63] hover:text-[#0D0C22] mb-6"
+            >
+                <ArrowLeft size={14} /> Back to Marketplace
+            </Link>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 {/* Reusable Product Image */}
                 <ProductImage
@@ -59,17 +81,15 @@ function ProductDetailsContent() {
                     title={product.title}
                 />
 
-                {/* Product Details */}
+                {/* Product Details & Enquiry */}
                 <div>
                     <ProductInfo product={product} />
 
-                    {/* Reusable Seller Information */}
                     <SellerCard
                         sellerName={product.sellerName}
                         sellerEmail={product.sellerEmail}
                     />
 
-                    {/* Contact Seller */}
                     <EnquiryForm productId={product._id} />
                 </div>
             </div>
@@ -79,7 +99,7 @@ function ProductDetailsContent() {
 
 export default function ProductDetailsPage() {
     return (
-        <Suspense fallback={<p className="text-center py-20">Loading product...</p>}>
+        <Suspense fallback={<div className="py-24 text-center text-sm text-[#524B63]">Loading product...</div>}>
             <ProductDetailsContent />
         </Suspense>
     );

@@ -1,36 +1,34 @@
-
 import ProductForm from "@/components/marketplace/ProductForm";
 
 export default function SellPage() {
     return (
-        <main className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 px-4 py-12">
+        <main className="min-h-screen bg-white px-6 py-12">
 
             {/* Page Heading */}
-            <div className="max-w-5xl mx-auto text-center mb-10">
-                <span className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                    List a Product
+            <div className="max-w-3xl mx-auto text-center mb-10">
+                <span className="inline-block border border-[#E7E7E9] bg-[#F8F7F4] text-[#0D0C22] px-3.5 py-1 rounded-full text-xs font-semibold mb-3">
+                    Campus Marketplace
                 </span>
 
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">
-                    Sell Your{" "}
-                    <span className="text-purple-600">Product</span>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0D0C22]">
+                    List a Product for Sale
                 </h1>
 
-                <p className="text-gray-500 mt-4 text-lg">
-                    List your used items and connect with fellow students.
+                <p className="text-[#3D3D4E] mt-2 text-sm max-w-md mx-auto">
+                    Pass on your unused items, textbooks, and gear to fellow college students.
                 </p>
             </div>
 
             {/* Form Card */}
-            <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-purple-100 p-6 md:p-10">
+            <div className="max-w-2xl mx-auto bg-white rounded-2xl border border-[#E7E7E9] p-6 sm:p-8">
 
-                <div className="mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900">
+                <div className="mb-6 border-b border-[#E7E7E9] pb-4">
+                    <h2 className="text-lg font-bold text-[#0D0C22]">
                         Product Details
                     </h2>
 
-                    <p className="text-gray-500 mt-2">
-                        Add the details of the item you want to sell.
+                    <p className="text-xs text-[#524B63] mt-1">
+                        Fill in accurate details to help buyers find your item.
                     </p>
                 </div>
 

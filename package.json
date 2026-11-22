@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed:products": "tsx src/scripts/seedProducts.ts",
+    "seed:sellers": "tsx src/scripts/seedSellers.ts",
     "seed:enquiries": "tsx src/scripts/seedEnquiries.ts"
   },
   "dependencies": {

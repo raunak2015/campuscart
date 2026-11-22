@@ -1,4 +1,3 @@
-
 "use client";
 
 import type { Product } from "@/types/product";
@@ -18,19 +17,22 @@ export default function FavoriteButton({
     return (
         <button
             type="button"
-            onClick={() => toggleFavorite(product)}
+            onClick={(e) => {
+                e.preventDefault();
+                toggleFavorite(product);
+            }}
             aria-label={
                 favorite
                     ? "Remove from favorites"
                     : "Add to favorites"
             }
-            className={`flex h-10 w-10 items-center justify-center rounded-full shadow-sm transition ${
+            className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
                 favorite
-                    ? "bg-red-50 text-red-500"
-                    : "bg-white text-gray-500 hover:bg-red-50 hover:text-red-500"
+                    ? "border-[#EA4C89] bg-[#FFF0F5] text-[#EA4C89]"
+                    : "border-[#E7E7E9] bg-white text-[#524B63] hover:border-[#0D0C22] hover:text-[#0D0C22]"
             }`}
         >
-            <span className="text-xl">
+            <span className="text-sm font-bold leading-none">
                 {favorite ? "♥" : "♡"}
             </span>
         </button>

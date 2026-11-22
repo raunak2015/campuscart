@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -28,10 +27,10 @@ export default function ProductForm() {
     const sellerEmail = customSellerEmail || user?.email || "";
 
     const inputClass =
-        "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none transition focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-100";
+        "w-full rounded-lg border border-[#E7E7E9] bg-[#F8F7F4] px-4 py-2.5 text-sm text-[#060318] outline-none transition focus:border-[#0D0C22] focus:bg-white";
 
     const labelClass =
-        "mb-2 block text-sm font-semibold text-gray-800";
+        "mb-1.5 block text-xs font-semibold text-[#0D0C22]";
 
     const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -69,10 +68,10 @@ export default function ProductForm() {
             }
 
             router.push("/marketplace");
-        } catch (error) {
+        } catch (err) {
             setError(
-                error instanceof Error
-                    ? error.message
+                err instanceof Error
+                    ? err.message
                     : "Something went wrong"
             );
         } finally {
@@ -81,7 +80,7 @@ export default function ProductForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
 
             {/* Product Title */}
             <div>
@@ -91,7 +90,7 @@ export default function ProductForm() {
 
                 <input
                     type="text"
-                    placeholder="e.g. Data Structures Book"
+                    placeholder="e.g. Data Structures and Algorithms in C++"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
@@ -106,39 +105,32 @@ export default function ProductForm() {
                 </label>
 
                 <textarea
-                    placeholder="Describe your product, condition, usage..."
+                    rows={4}
+                    placeholder="Describe the condition, edition, and any included accessories..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
-                    rows={4}
-                    className={`${inputClass} resize-y`}
+                    className={inputClass}
                 />
             </div>
 
-            {/* Price + Listing Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Price & Listing Type */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <div>
                     <label className={labelClass}>
                         Price (₹) <span className="text-red-500">*</span>
                     </label>
 
-                    <div className="relative">
-                        <span className="absolute left-4 top-3 text-gray-500">
-                            ₹
-                        </span>
-
-                        <input
-                            type="number"
-                            placeholder="Enter price"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            min="0"
-                            required
-                            disabled={listingType === "free"}
-                            className={`${inputClass} pl-9 disabled:bg-gray-100`}
-                        />
-                    </div>
+                    <input
+                        type="number"
+                        placeholder="0"
+                        min="0"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        required
+                        className={inputClass}
+                    />
                 </div>
 
                 <div>
@@ -146,34 +138,25 @@ export default function ProductForm() {
                         Listing Type <span className="text-red-500">*</span>
                     </label>
 
-                    <div className="grid grid-cols-3 gap-2">
-                        {(["sale", "free", "exchange"] as const).map((type) => (
-                            <button
-                                key={type}
-                                type="button"
-                                onClick={() => {
-                                    setListingType(type);
-
-                                    if (type === "free") {
-                                        setPrice("0");
-                                    }
-                                }}
-                                className={`rounded-xl border py-3 text-sm font-medium capitalize transition ${
-                                    listingType === type
-                                        ? "border-purple-500 bg-purple-600 text-white shadow-md shadow-purple-100"
-                                        : "border-gray-200 bg-gray-50 text-gray-700 hover:border-purple-300 hover:bg-purple-50"
-                                }`}
-                            >
-                                {type}
-                            </button>
-                        ))}
-                    </div>
+                    <select
+                        value={listingType}
+                        onChange={(e) =>
+                            setListingType(
+                                e.target.value as "sale" | "free" | "exchange"
+                            )
+                        }
+                        className={inputClass}
+                    >
+                        <option value="sale">For Sale</option>
+                        <option value="free">Free</option>
+                        <option value="exchange">Exchange</option>
+                    </select>
                 </div>
 
             </div>
 
-            {/* Category + Condition */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Category & Condition */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <div>
                     <label className={labelClass}>
@@ -212,7 +195,7 @@ export default function ProductForm() {
             </div>
 
             {/* Seller Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <div>
                     <label className={labelClass}>
@@ -236,7 +219,7 @@ export default function ProductForm() {
 
                     <input
                         type="email"
-                        placeholder="you@example.com"
+                        placeholder="you@campus.edu"
                         value={sellerEmail}
                         onChange={(e) => setCustomSellerEmail(e.target.value)}
                         required
@@ -249,36 +232,35 @@ export default function ProductForm() {
             {/* Image URL */}
             <div>
                 <label className={labelClass}>
-                    Product Image URL <span className="text-gray-400 font-normal">(Optional)</span>
+                    Product Image URL <span className="text-[#524B63] font-normal">(Optional)</span>
                 </label>
 
                 <input
                     type="url"
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://images.unsplash.com/..."
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
                     className={inputClass}
                 />
+            </div>
 
-                {/* Image Preview */}
-                {image && (
-                    <div className="mt-4">
-                        <p className="text-sm text-gray-500 mb-2">
-                            Image Preview
-                        </p>
-
+            {/* Image Preview */}
+            {image && (
+                <div className="rounded-lg border border-[#E7E7E9] p-3 bg-[#F8F7F4]">
+                    <p className="text-xs font-semibold text-[#524B63] mb-2">Image Preview:</p>
+                    <div className="h-44 w-full overflow-hidden rounded-md bg-white">
                         <img
                             src={image}
-                            alt="Product preview"
-                            className="h-48 w-full rounded-xl border border-gray-200 object-contain bg-gray-50"
+                            alt="Preview"
+                            className="h-full w-full object-cover"
                         />
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Error Message */}
             {error && (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-600">
                     {error}
                 </div>
             )}
@@ -287,14 +269,10 @@ export default function ProductForm() {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 py-4 font-semibold text-white shadow-lg shadow-purple-200 transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-50"
+                className="w-full rounded-full bg-[#0D0C22] py-3 text-sm font-semibold text-white transition hover:bg-[#3A3546] disabled:opacity-50"
             >
-                {loading ? "Listing Product..." : "+ List Product"}
+                {loading ? "Publishing listing..." : "Publish Listing"}
             </button>
-
-            <p className="text-center text-xs text-gray-400">
-                * Required fields
-            </p>
 
         </form>
     );

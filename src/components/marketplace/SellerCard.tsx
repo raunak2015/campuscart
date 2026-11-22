@@ -8,14 +8,16 @@ export default function SellerCard({
     sellerEmail,
 }: SellerCardProps) {
     return (
-        <div className="border rounded-xl p-4 mt-8">
-            <h2 className="font-semibold text-lg">
+        <div className="rounded-xl border border-[#E7E7E9] bg-[#F8F7F4] p-4 mt-6">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#524B63]">
                 Seller Information
-            </h2>
+            </h3>
 
-            <p className="mt-2">{sellerName}</p>
+            <p className="mt-2 text-sm font-bold text-[#0D0C22]">
+                {sellerName}
+            </p>
 
-            <p className="text-gray-500 text-sm">
+            <p className="text-xs text-[#524B63] mt-0.5">
                 {sellerEmail}
             </p>
         </div>

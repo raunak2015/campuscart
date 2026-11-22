@@ -39,7 +39,7 @@ export default function LoginPage() {
                 throw new Error(data.message || "Login failed");
             }
             await refreshUser();
-            router.push("/dashboard");
+            router.push("/account");
 
         } catch (err) {
             setError(
@@ -51,28 +51,34 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-violet-50 via-white to-purple-50 px-4 py-12">
+        <main className="flex min-h-screen items-center justify-center bg-white px-6 py-12">
 
-            <div className="w-full max-w-md rounded-3xl border border-purple-100 bg-white p-8 shadow-xl">
+            <div className="w-full max-w-md rounded-2xl border border-[#E7E7E9] bg-white p-8">
 
                 {/* Header */}
                 <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-extrabold text-gray-900">
-                        Welcome to{" "}
-                        <span className="text-purple-600">CampusCart</span>
+                    <h1 className="text-2xl font-bold tracking-tight text-[#0D0C22]">
+                        Welcome to CampusCart<span className="text-[#EA4C89]">.</span>
                     </h1>
 
-                    <p className="mt-2 text-sm text-gray-500">
-                        Login to continue exploring.
+                    <p className="mt-1 text-xs text-[#524B63]">
+                        Enter your credentials to access your account.
                     </p>
                 </div>
 
+                {/* Error */}
+                {error && (
+                    <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-600">
+                        {error}
+                    </div>
+                )}
+
                 {/* Login Form */}
-                <form onSubmit={handleLogin} className="space-y-5">
+                <form onSubmit={handleLogin} className="space-y-4">
 
                     {/* Email */}
                     <div>
-                        <label className="mb-2 block text-sm font-semibold text-gray-700">
+                        <label className="mb-1.5 block text-xs font-semibold text-[#0D0C22]">
                             Email Address
                         </label>
 
@@ -80,15 +86,15 @@ export default function LoginPage() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email"
+                            placeholder="you@campus.edu"
                             required
-                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none transition focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-100"
+                            className="w-full rounded-lg border border-[#E7E7E9] bg-[#F8F7F4] px-4 py-2.5 text-sm text-[#060318] outline-none transition focus:border-[#0D0C22] focus:bg-white"
                         />
                     </div>
 
                     {/* Password */}
                     <div>
-                        <label className="mb-2 block text-sm font-semibold text-gray-700">
+                        <label className="mb-1.5 block text-xs font-semibold text-[#0D0C22]">
                             Password
                         </label>
 
@@ -96,36 +102,29 @@ export default function LoginPage() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
+                            placeholder="••••••••"
                             required
-                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none transition focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-100"
+                            className="w-full rounded-lg border border-[#E7E7E9] bg-[#F8F7F4] px-4 py-2.5 text-sm text-[#060318] outline-none transition focus:border-[#0D0C22] focus:bg-white"
                         />
                     </div>
-
-                    {/* Error */}
-                    {error && (
-                        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
-                            {error}
-                        </p>
-                    )}
 
                     {/* Submit Button */}
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full rounded-xl bg-purple-600 py-3 font-semibold text-white transition hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="w-full rounded-full bg-[#0D0C22] py-3 text-sm font-semibold text-white transition hover:bg-[#3A3546] disabled:opacity-50"
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading ? "Logging in..." : "Log In"}
                     </button>
 
                 </form>
 
                 {/* Signup Link */}
-                <p className="mt-6 text-center text-sm text-gray-500">
+                <p className="mt-6 text-center text-xs text-[#524B63]">
                     Don&apos;t have an account?{" "}
                     <Link
                         href="/signup"
-                        className="font-semibold text-purple-600 hover:text-purple-700"
+                        className="font-semibold text-[#0D0C22] underline hover:text-[#3D3D4E]"
                     >
                         Sign up
                     </Link>

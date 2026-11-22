@@ -71,18 +71,18 @@ export default function ReceivedEnquiriesPage() {
 
     if (authLoading || loading) {
         return (
-            <main className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <p className="text-gray-500">Loading received enquiries...</p>
+            <main className="min-h-screen bg-white flex items-center justify-center">
+                <p className="text-sm font-medium text-[#524B63]">Loading received enquiries...</p>
             </main>
         );
     }
 
     if (!user) {
         return (
-            <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <main className="min-h-screen bg-white flex items-center justify-center">
                 <div className="text-center">
-                    <p className="text-gray-700 font-semibold mb-4">Please log in to view received enquiries.</p>
-                    <Link href="/login" className="px-5 py-2.5 bg-violet-700 text-white rounded-xl font-medium">
+                    <p className="text-sm font-semibold text-[#0D0C22] mb-3">Please log in to view received enquiries.</p>
+                    <Link href="/login" className="px-5 py-2.5 bg-[#0D0C22] text-white rounded-full text-xs font-semibold">
                         Log In
                     </Link>
                 </div>
@@ -91,49 +91,47 @@ export default function ReceivedEnquiriesPage() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-5xl">
+        <main className="min-h-screen bg-white px-6 py-10">
+            <div className="mx-auto max-w-4xl">
                 {/* Header */}
-                <div className="mb-6 flex items-center justify-between">
-                    <div>
-                        <Link
-                            href="/account"
-                            className="inline-flex items-center gap-1 text-sm font-medium text-violet-700 hover:underline mb-2"
-                        >
-                            <ArrowLeft size={16} /> Back to Dashboard
-                        </Link>
-                        <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-                            <Inbox className="text-violet-700" size={28} />
-                            Received Enquiries
-                        </h1>
-                        <p className="mt-1 text-sm text-gray-500">
-                            Messages from buyers interested in your listings.
-                        </p>
-                    </div>
+                <div className="mb-6">
+                    <Link
+                        href="/account"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#524B63] hover:text-[#0D0C22] mb-3"
+                    >
+                        <ArrowLeft size={14} /> Back to Dashboard
+                    </Link>
+                    <h1 className="text-3xl font-extrabold tracking-tight text-[#0D0C22] flex items-center gap-2">
+                        <Inbox className="text-[#0D0C22]" size={24} />
+                        Received Enquiries
+                    </h1>
+                    <p className="mt-1 text-sm text-[#3D3D4E]">
+                        Inquiries from fellow students interested in your listings.
+                    </p>
                 </div>
 
                 {error && (
-                    <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                    <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-3 text-xs font-semibold text-red-600">
                         {error}
                     </div>
                 )}
 
                 {enquiries.length === 0 ? (
-                    <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center shadow-sm">
-                        <Inbox className="mx-auto text-gray-300 mb-3" size={48} />
-                        <h3 className="text-lg font-semibold text-gray-800">No buyer enquiries yet</h3>
-                        <p className="mt-1 text-sm text-gray-500">
-                            When students reach out about your listed items, their enquiries will appear here.
+                    <div className="rounded-xl border border-[#E7E7E9] bg-[#F8F7F4] p-12 text-center">
+                        <Inbox className="mx-auto text-[#524B63] mb-3" size={36} />
+                        <h3 className="text-base font-bold text-[#0D0C22]">No buyer enquiries yet</h3>
+                        <p className="mt-1 text-xs text-[#524B63]">
+                            When students message you about your items, their enquiries will appear here.
                         </p>
                         <Link
                             href="/sell"
-                            className="mt-5 inline-block rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-violet-800"
+                            className="mt-5 inline-block rounded-full bg-[#0D0C22] px-5 py-2 text-xs font-semibold text-white hover:bg-[#3A3546]"
                         >
-                            Create a Listing
+                            List an Item
                         </Link>
                     </div>
                 ) : (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                         {enquiries.map((enquiry) => {
                             const product = typeof enquiry.productId === "object" ? (enquiry.productId as Product) : null;
                             const isResponded = enquiry.status === "responded";
@@ -142,23 +140,23 @@ export default function ReceivedEnquiriesPage() {
                             return (
                                 <div
                                     key={enquiry._id}
-                                    className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md transition"
+                                    className="rounded-xl border border-[#E7E7E9] bg-white p-5 transition hover:border-[#0D0C22]"
                                 >
-                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-3 mb-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#E7E7E9] pb-3 mb-3">
                                         <div>
-                                            <p className="text-xs text-gray-400">
+                                            <p className="text-[11px] font-medium text-[#524B63]">
                                                 From:{" "}
-                                                <span className="font-semibold text-gray-900">
+                                                <span className="font-semibold text-[#0D0C22]">
                                                     {enquiry.buyerName}
                                                 </span>{" "}
                                                 ({enquiry.buyerEmail})
                                             </p>
                                             {product && (
-                                                <p className="text-sm font-semibold text-gray-800 mt-0.5">
+                                                <p className="text-xs font-semibold text-[#3D3D4E] mt-0.5">
                                                     Item:{" "}
                                                     <Link
                                                         href={`/product/${product._id}`}
-                                                        className="text-violet-700 hover:underline"
+                                                        className="font-bold text-[#0D0C22] hover:underline"
                                                     >
                                                         {product.title}
                                                     </Link>
@@ -166,42 +164,42 @@ export default function ReceivedEnquiriesPage() {
                                             )}
                                         </div>
 
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-2">
                                             <span
-                                                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                                                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${
                                                     isResponded
-                                                        ? "bg-green-100 text-green-700"
-                                                        : "bg-amber-100 text-amber-700"
+                                                        ? "border-green-200 bg-green-50 text-green-700"
+                                                        : "border-[#E7E7E9] bg-[#F8F7F4] text-[#0D0C22]"
                                                 }`}
                                             >
-                                                {isResponded ? <CheckCircle2 size={13} /> : <Clock size={13} />}
+                                                {isResponded ? <CheckCircle2 size={12} /> : <Clock size={12} />}
                                                 {isResponded ? "Responded" : "Pending"}
                                             </span>
-                                            <span className="text-xs text-gray-400">
+                                            <span className="text-[11px] text-[#524B63]">
                                                 {formatDate(enquiry.createdAt)}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="bg-gray-50 rounded-xl p-3.5 text-sm text-gray-700 mb-4">
-                                        <p className="whitespace-pre-wrap">{enquiry.message}</p>
+                                    <div className="bg-[#F8F7F4] rounded-lg p-3 text-xs text-[#060318] mb-4">
+                                        <p className="whitespace-pre-wrap leading-relaxed">{enquiry.message}</p>
                                     </div>
 
-                                    <div className="flex items-center justify-end gap-3">
+                                    <div className="flex items-center justify-end gap-2">
                                         <a
                                             href={`mailto:${enquiry.buyerEmail}?subject=Regarding your enquiry for ${product ? product.title : "CampusCart listing"}`}
-                                            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition"
+                                            className="inline-flex items-center gap-1.5 rounded-full border border-[#E7E7E9] px-3.5 py-1.5 text-xs font-semibold text-[#0D0C22] hover:bg-[#F8F7F4] transition"
                                         >
-                                            <Mail size={14} /> Reply via Email
+                                            <Mail size={13} /> Reply via Email
                                         </a>
 
                                         <button
                                             onClick={() => handleToggleStatus(enquiry)}
                                             disabled={isUpdating}
-                                            className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold text-white transition ${
+                                            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold text-white transition ${
                                                 isResponded
-                                                    ? "bg-amber-600 hover:bg-amber-700"
-                                                    : "bg-green-600 hover:bg-green-700"
+                                                    ? "bg-[#3A3546] hover:bg-[#0D0C22]"
+                                                    : "bg-[#0D0C22] hover:bg-[#3A3546]"
                                             } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                                         >
                                             {isUpdating
