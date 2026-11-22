@@ -1,10 +1,12 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 export interface IUser {
     name: string;
     email: string;
     password: string;
     role: "student" | "admin";
+    phone?: string;
+    college?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -34,6 +36,18 @@ const userSchema = new Schema<IUser>(
             type: String,
             enum: ["student", "admin"],
             default: "student",
+        },
+
+        phone: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+
+        college: {
+            type: String,
+            trim: true,
+            default: "",
         },
     },
     { timestamps: true }

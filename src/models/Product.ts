@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 export interface IProduct {
     title: string;
@@ -69,7 +69,7 @@ const productSchema = new Schema<IProduct>({
     {
         timestamps: true
     }
-)
+);
 
 const Product = models.Product || model<IProduct>("Product", productSchema);
 

@@ -97,12 +97,13 @@ export default function DashboardPage() {
     const tabs: {
         name: DashboardTab;
         icon: React.ElementType;
+        href?: string;
     }[] = [
         { name: "Overview", icon: LayoutDashboard },
-        { name: "My Listings", icon: ShoppingBag },
-        { name: "My Enquiries", icon: Send },
-        { name: "Received Enquiries", icon: Inbox },
-        { name: "Profile", icon: UserRound },
+        { name: "My Listings", icon: ShoppingBag, href: "/account/listings" },
+        { name: "My Enquiries", icon: Send, href: "/account/enquiries" },
+        { name: "Received Enquiries", icon: Inbox, href: "/account/received-enquiries" },
+        { name: "Profile", icon: UserRound, href: "/account/profile" },
     ];
 
     const statCards = [
@@ -159,6 +160,19 @@ export default function DashboardPage() {
                             const Icon = tab.icon;
                             const isActive = activeTab === tab.name;
 
+                            if (tab.href) {
+                                return (
+                                    <Link
+                                        key={tab.name}
+                                        href={tab.href}
+                                        className="flex items-center gap-2 border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-gray-500 transition hover:text-violet-700"
+                                    >
+                                        <Icon size={17} />
+                                        {tab.name}
+                                    </Link>
+                                );
+                            }
+
                             return (
                                 <button
                                     key={tab.name}
@@ -186,7 +200,7 @@ export default function DashboardPage() {
                                     Overview
                                 </h2>
                                 <p className="mt-1 text-sm text-gray-500">
-                                    Here's what's happening with your account.
+                                    Here&apos;s what&apos;s happening with your account.
                                 </p>
                             </div>
 
