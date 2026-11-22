@@ -3,9 +3,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProductForm() {
     const router = useRouter();
+    const { user } = useAuth();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -15,12 +17,15 @@ export default function ProductForm() {
     const [listingType, setListingType] = useState<
         "sale" | "free" | "exchange"
     >("sale");
-    const [sellerName, setSellerName] = useState("");
-    const [sellerEmail, setSellerEmail] = useState("");
+    const [customSellerName, setCustomSellerName] = useState("");
+    const [customSellerEmail, setCustomSellerEmail] = useState("");
     const [image, setImage] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const sellerName = customSellerName || user?.name || "";
+    const sellerEmail = customSellerEmail || user?.email || "";
 
     const inputClass =
         "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none transition focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-100";
@@ -218,7 +223,7 @@ export default function ProductForm() {
                         type="text"
                         placeholder="Your name"
                         value={sellerName}
-                        onChange={(e) => setSellerName(e.target.value)}
+                        onChange={(e) => setCustomSellerName(e.target.value)}
                         required
                         className={inputClass}
                     />
@@ -233,7 +238,7 @@ export default function ProductForm() {
                         type="email"
                         placeholder="you@example.com"
                         value={sellerEmail}
-                        onChange={(e) => setSellerEmail(e.target.value)}
+                        onChange={(e) => setCustomSellerEmail(e.target.value)}
                         required
                         className={inputClass}
                     />

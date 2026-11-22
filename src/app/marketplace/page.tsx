@@ -51,7 +51,7 @@ export default function MarketplacePage() {
                 const data: Product[] = await response.json();
 
                 setProducts(data);
-            } catch (error) {
+            } catch {
                 setError("Unable to load products");
             } finally {
                 setLoading(false);

@@ -5,6 +5,7 @@ import {
     useContext,
     useEffect,
     useState,
+    useCallback,
     type ReactNode,
 } from "react";
 
@@ -28,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const refreshUser = async () => {
+    const refreshUser = useCallback(async () => {
         try {
             const response = await fetch("/api/auth/me");
 
@@ -39,16 +40,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             const data = await response.json();
             setUser(data.user);
-        } catch (error) {
-            console.error("Failed to fetch user:", error);
+        } catch {
             setUser(null);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
-        refreshUser();
+        let active = true;
+
+        const checkAuth = async () => {
+            try {
+                const response = await fetch("/api/auth/me");
+                if (!response.ok) {
+                    if (active) setUser(null);
+                    return;
+                }
+                const data = await response.json();
+                if (active) setUser(data.user);
+            } catch {
+                if (active) setUser(null);
+            } finally {
+                if (active) setLoading(false);
+            }
+        };
+
+        checkAuth();
+
+        return () => {
+            active = false;
+        };
     }, []);
 
     const logout = async () => {

@@ -27,13 +27,18 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     // Load favorites from localStorage
     useEffect(() => {
-        const storedFavorites = localStorage.getItem("campuscart-favorites");
-
-        if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites));
-        }
-
-        setLoaded(true);
+        queueMicrotask(() => {
+            try {
+                const storedFavorites = localStorage.getItem("campuscart-favorites");
+                if (storedFavorites) {
+                    setFavorites(JSON.parse(storedFavorites));
+                }
+            } catch {
+                // ignore localStorage parsing errors
+            } finally {
+                setLoaded(true);
+            }
+        });
     }, []);
 
     // Save favorites to localStorage
@@ -83,9 +88,7 @@ export function useFavorites() {
     const context = useContext(FavoritesContext);
 
     if (!context) {
-        throw new Error(
-            "useFavorites must be used inside FavoritesProvider"
-        );
+        throw new Error("useFavorites must be used inside FavoritesProvider");
     }
 
     return context;

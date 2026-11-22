@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Product } from "@/types/product";
+import type { Product } from "@/types/product";
 import ProductImage from "@/components/marketplace/ProductImage";
 import ProductInfo from "@/components/marketplace/ProductInfo";
 import SellerCard from "@/components/marketplace/SellerCard";
 import EnquiryForm from "@/components/marketplace/EnquiryForm";
 
-export default function ProductDetailsPage() {
+function ProductDetailsContent() {
     const { id } = useParams<{ id: string }>();
 
     const [product, setProduct] = useState<Product | null>(null);
@@ -26,14 +26,16 @@ export default function ProductDetailsPage() {
 
                 const data: Product = await response.json();
                 setProduct(data);
-            } catch (error) {
+            } catch {
                 setError("Unable to load product details");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProduct();
+        if (id) {
+            fetchProduct();
+        }
     }, [id]);
 
     if (loading) {
@@ -48,11 +50,9 @@ export default function ProductDetailsPage() {
         );
     }
 
-
     return (
         <div className="max-w-6xl mx-auto p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-
                 {/* Reusable Product Image */}
                 <ProductImage
                     images={product.images}
@@ -70,12 +70,17 @@ export default function ProductDetailsPage() {
                     />
 
                     {/* Contact Seller */}
-
                     <EnquiryForm productId={product._id} />
                 </div>
-
             </div>
         </div>
     );
+}
 
+export default function ProductDetailsPage() {
+    return (
+        <Suspense fallback={<p className="text-center py-20">Loading product...</p>}>
+            <ProductDetailsContent />
+        </Suspense>
+    );
 }
